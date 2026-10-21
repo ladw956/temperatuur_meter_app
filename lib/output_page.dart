@@ -1,11 +1,11 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'home_page.dart';
 
-// Output Page - Display Weather Results
 class OutputPage extends StatefulWidget {
   final City? city;
 
@@ -41,11 +41,19 @@ class OutputPageState extends State<OutputPage> {
     });
 
     try {
-      final weatherUrl =
-          'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${city.latitude}&lon=${city.longitude}';
+      final latitude = city.latitude.toStringAsFixed(4);
+      final longitude = city.longitude.toStringAsFixed(4);
+      final weatherUrl = kIsWeb
+          ? '/weatherapi/locationforecast/2.0/compact?lat=$latitude&lon=$longitude'
+          : 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=$latitude&lon=$longitude';
       final weatherResponse = await http.get(
         Uri.parse(weatherUrl),
-        headers: {'User-Agent': 'TemperatureApp/1.0'},
+        headers: kIsWeb
+            ? const {}
+            : const {
+                'User-Agent':
+                    'JayleeWigleyTemperatureApp/1.0 https://github.com/ladw956/temperatuur_meter_app',
+              },
       );
 
       if (weatherResponse.statusCode == 200) {
@@ -54,22 +62,23 @@ class OutputPageState extends State<OutputPage> {
         final details = timeseries['data']['instant']['details'];
         final temp = details['air_temperature'].toDouble();
         final windSpeed = details['wind_speed'].toDouble();
+        final windSpeedKmh = windSpeed * 3.6;
 
         final feelsLike = _calculateFeelsLike(temp, windSpeed);
 
         setState(() {
           _weatherInfo =
-              'Gevoel: ${feelsLike.toStringAsFixed(1)}°C\nActueel: ${temp.toStringAsFixed(1)}°C\nWind: $windSpeed m/s';
+              'Gevoel: ${feelsLike.toStringAsFixed(1)}°C\nActueel: ${temp.toStringAsFixed(1)}°C\nWind: ${windSpeedKmh.toStringAsFixed(1)} km/u';
         });
       } else {
         setState(() {
           _weatherInfo =
-              'Could not fetch weather data. Status: ${weatherResponse.statusCode}';
+              'Kan geen weergegevens ophalen. Status: ${weatherResponse.statusCode}';
         });
       }
     } catch (e) {
       setState(() {
-        _weatherInfo = 'An error occurred: $e';
+        _weatherInfo = 'Er is een fout opgetreden: $e';
       });
     } finally {
       setState(() {

@@ -48,7 +48,6 @@ class ThemeProvider with ChangeNotifier {
   }
 }
 
-// Home Page - City Input
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -65,7 +64,7 @@ class HomePageState extends State<HomePage> {
     }
 
     final url =
-        'https://geocoding-api.open-meteo.com/v1/search?name=$query&count=5&language=en&format=json';
+        'https://geocoding-api.open-meteo.com/v1/search?name=$query&count=5&language=nl&format=json';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -75,8 +74,8 @@ class HomePageState extends State<HomePage> {
           return results.map((json) => City.fromJson(json));
         }
       }
-    } catch (e) {
-      // Handle error
+    } catch (_) {
+      return [];
     }
     return [];
   }
@@ -87,14 +86,14 @@ class HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gevoels temperatuur Meter'),
+        title: const Text('Gevoelstemperatuurmeter'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
               Navigator.pushNamed(context, '/settings');
             },
-            tooltip: 'instellingen',
+            tooltip: 'Instellingen',
           ),
           IconButton(
             icon: Icon(

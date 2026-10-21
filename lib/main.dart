@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return MaterialApp(
-          title: 'Real Feel-Real Time Temperature App',
+          title: 'Gevoelstemperatuur App',
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeProvider.themeMode,
@@ -106,4 +106,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-// commit 01

@@ -1,0 +1,18 @@
+server {
+    listen ${PORT};
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location /weatherapi/ {
+        proxy_ssl_server_name on;
+        proxy_set_header Host api.met.no;
+        proxy_set_header User-Agent "JayleeWigleyTemperatureApp/1.0 https://github.com/ladw956/temperatuur_meter_app";
+        proxy_pass https://api.met.no/weatherapi/;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

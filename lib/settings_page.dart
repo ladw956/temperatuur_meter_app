@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_page.dart';
 
-// Settings Page - Explanation in Dutch
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -21,7 +20,7 @@ class SettingsPage extends StatelessWidget {
                   : Icons.dark_mode,
             ),
             onPressed: () => themeProvider.toggleTheme(),
-            tooltip: 'Toggle Theme',
+            tooltip: 'Thema wisselen',
           ),
         ],
       ),
@@ -61,18 +60,26 @@ class SettingsPage extends StatelessWidget {
                     context,
                   ).textTheme.bodyMedium?.copyWith(fontSize: 16, height: 1.5),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
                 Text(
-                  '1. Selecteer een stad of land op de startpagina\n\n'
-                  '2. De app haalt realtime weergegevens op via een weer-API\n\n'
-                  '3. Er wordt een berekening gemaakt op basis van de temperatuur en windsnelheid\n\n'
-                  '4. Je kunt de gevoelstemperatuur en het werkelijke temperatuur zien op de outputpagina',
+                  'Formule gevoelstemperatuur:\n'
+                  'Tgevoel = 13.12 + 0.6215T - 11.37 · v^0.16 + 0.3965 · T · v^0.16\n'
+                  'T = temperatuur (°C), v = windsnelheid (m/s, intern omgerekend naar km/u)',
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(fontSize: 16, height: 1.5),
                 ),
                 const SizedBox(height: 20),
-                // Interactive Elements Panel
+                Text(
+                  '1. Selecteer een stad of land op de startpagina\n\n'
+                  '2. De app haalt realtime weergegevens op via een weer-API\n\n'
+                  '3. Er wordt een berekening gemaakt op basis van de temperatuur en windsnelheid\n\n'
+                  '4. Je kunt de gevoelstemperatuur en de werkelijke temperatuur zien op de outputpagina',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontSize: 16, height: 1.5),
+                ),
+                const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -143,7 +150,7 @@ class SettingsPage extends StatelessWidget {
                   '• Realtime weerdata van over de hele wereld\n'
                   '• Automatische berekening van gevoelstemperatuur\n'
                   '• Licht en donker thema\n'
-                  '• Eenvoudige users interface',
+                  '• Eenvoudige gebruikersinterface',
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(fontSize: 16, height: 1.5),
