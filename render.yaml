@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: temperatuur-meter-app
-    runtime: docker
-    plan: free
-    dockerfilePath: ./Dockerfile
-    autoDeployTrigger: commit
-    healthCheckPath: /
